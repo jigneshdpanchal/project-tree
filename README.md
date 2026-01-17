@@ -1,7 +1,7 @@
 # project-tree 🌳
 
-[![npm version](https://img.shields.io/npm/v/project-tree.svg?style=flat)](https://www.npmjs.com/package/project-tree)
-[![Downloads](https://img.shields.io/npm/dt/project-tree.svg)](https://www.npmjs.com/package/project-tree)
+[![npm version](https://img.shields.io/npm/v/project-tree.svg?style=flat)](https://www.npmjs.com/package/@jigneshdpanchal/project-tree)
+[![Downloads](https://img.shields.io/npm/dt/project-tree.svg)](https://www.npmjs.com/package/@jigneshdpanchal/project-tree)
 [![License](https://img.shields.io/npm/l/project-tree.svg)](https://opensource.org/licenses/ISC)
 
 A simple and fast CLI tool to generate a clean directory tree for **any Node.js project**.  
