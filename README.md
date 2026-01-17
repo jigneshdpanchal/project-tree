@@ -60,11 +60,14 @@ project-tree backend
 
 ### Example output
 
+```bash
 project-tree
 ├── bin
 │   └── project-tree.js
 ├── package.json
 └── README.md
+
+```
 
 ### 🚫 Ignored by Default
 
