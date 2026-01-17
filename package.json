@@ -4,17 +4,23 @@
   "description": "Generate a clean directory tree for any Node.js project",
   "main": "index.js",
   "bin": {
-    "project-tree": "./bin/project-tree.js"
+    "project-tree": "bin/project-tree.js"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": ["tree", "directory", "cli", "nodejs", "project-tree"],
+  "keywords": [
+    "tree",
+    "directory",
+    "cli",
+    "nodejs",
+    "project-tree"
+  ],
   "author": "Your Name",
   "license": "ISC",
   "repository": {
     "type": "git",
-    "url": "https://github.com/jigneshdpanchal/project-tree.git"
+    "url": "git+https://github.com/jigneshdpanchal/project-tree.git"
   },
   "type": "commonjs"
 }
