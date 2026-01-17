@@ -119,7 +119,7 @@ Node.js v14 or higher
 
 ```bash
 
-git clone https://github.com/yourusername/project-tree.git
+git clone https://github.com/jigneshdpanchal/project-tree.git
 cd project-tree
 npm install
 npm link
