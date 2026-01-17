@@ -206,14 +206,3 @@ This version:
 - Keeps **installation, usage, ignored files, and requirements** clear  
 - Adds **structured contributing guide**  
 
-## ✅ Why this README is “proper”
-
-✔ Clear description  
-✔ Installation options (`npx` + global)  
-✔ Usage examples  
-✔ Feature list  
-✔ Ignore behavior explained  
-✔ npm-style formatting  
-✔ Beginner-friendly  
-
----
