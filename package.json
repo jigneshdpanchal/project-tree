@@ -1,16 +1,20 @@
 {
   "name": "project-tree",
   "version": "1.0.0",
-  "description": "Generate a directory tree for any Node.js project",
-  "type": "commonjs",
+  "description": "Generate a clean directory tree for any Node.js project",
+  "main": "index.js",
   "bin": {
     "project-tree": "./bin/project-tree.js"
   },
-  "keywords": [
-    "tree",
-    "directory",
-    "cli",
-    "nodejs"
-  ],
-  "license": "ISC"
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": ["tree", "directory", "cli", "nodejs", "project-tree"],
+  "author": "Your Name",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/project-tree.git"
+  },
+  "type": "commonjs"
 }
