@@ -1,6 +1,6 @@
 {
-  "name": "project-tree",
-  "version": "1.0.0",
+  "name": "@jigneshdpanchal/project-tree",
+  "version": "1.0.1",
   "description": "Generate a clean directory tree for any Node.js project",
   "main": "index.js",
   "bin": {
@@ -16,7 +16,7 @@
     "nodejs",
     "project-tree"
   ],
-  "author": "Your Name",
+  "author": "Jignesh Panchal",
   "license": "ISC",
   "repository": {
     "type": "git",
