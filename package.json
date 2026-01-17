@@ -1,0 +1,16 @@
+{
+  "name": "project-tree",
+  "version": "1.0.0",
+  "description": "Generate a directory tree for any Node.js project",
+  "type": "commonjs",
+  "bin": {
+    "project-tree": "./bin/project-tree.js"
+  },
+  "keywords": [
+    "tree",
+    "directory",
+    "cli",
+    "nodejs"
+  ],
+  "license": "ISC"
+}
