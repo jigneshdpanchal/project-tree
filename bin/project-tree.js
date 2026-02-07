@@ -3,17 +3,12 @@
 const fs = require("fs");
 const path = require("path");
 
-// --------------------
-// CLI Argument Parsing
-// --------------------
 const args = process.argv.slice(2);
 
-// Default root directory
 let ROOT_DIR = ".";
 let MAX_DEPTH = Infinity;
 let JSON_OUTPUT = false;
 
-// Default ignore list
 const DEFAULT_IGNORE = new Set([
   "node_modules",
   ".git",
@@ -28,12 +23,10 @@ const DEFAULT_IGNORE = new Set([
   "pnpm-lock.yaml"
 ]);
 
-// User-specified additional ignores
 const USER_IGNORE = new Set();
 
-// --------------------
-// Parse Arguments
-// --------------------
+/* ---------------- CLI ARG PARSING ---------------- */
+
 for (let i = 0; i < args.length; i++) {
   const arg = args[i];
 
@@ -56,10 +49,10 @@ Examples:
   project-tree
   project-tree src --depth 2 --ignore logs
   project-tree backend --json
-      `);
+`);
       process.exit(0);
 
-    case "--depth":
+    case "--depth": {
       const depth = args[i + 1];
       if (!depth || isNaN(depth)) {
         console.error("Error: --depth requires a number");
@@ -68,8 +61,9 @@ Examples:
       MAX_DEPTH = parseInt(depth, 10);
       i++;
       break;
+    }
 
-    case "--ignore":
+    case "--ignore": {
       const ignoreName = args[i + 1];
       if (!ignoreName) {
         console.error("Error: --ignore requires a file or folder name");
@@ -78,6 +72,7 @@ Examples:
       USER_IGNORE.add(ignoreName);
       i++;
       break;
+    }
 
     case "--json":
       JSON_OUTPUT = true;
@@ -91,75 +86,74 @@ Examples:
   }
 }
 
-// --------------------
-// Tree Generation
-// --------------------
-function generateTree(dir, prefix = "", depth = 0) {
+/* ---------------- TREE GENERATION ---------------- */
+
+function generateTree(dir, depth = 0) {
   let items;
+
   try {
     items = fs.readdirSync(dir, { withFileTypes: true });
   } catch {
-    return null;
+    return [];
   }
 
-  // Filter ignored items
   items = items.filter(
-    item => !DEFAULT_IGNORE.has(item.name) && !USER_IGNORE.has(item.name)
+    item =>
+      !DEFAULT_IGNORE.has(item.name) &&
+      !USER_IGNORE.has(item.name)
   );
 
-  // Sort directories first, optional
-  items.sort((a, b) => (a.isDirectory() && !b.isDirectory() ? -1 : 0));
-
-  // Build tree structure
-  const tree = [];
-
-  items.forEach((item, index) => {
-    const isLast = index === items.length - 1;
-    const connector = isLast ? "└── " : "├── ";
-    const name = item.name;
-
-    const node = { name };
-
-    if (item.isDirectory() && depth + 1 < MAX_DEPTH) {
-      const children = generateTree(path.join(dir, name), prefix + (isLast ? "    " : "│   "), depth + 1);
-      if (children) node.children = children;
-    }
-
-    tree.push(node);
-
-    // Print text if not JSON
-    if (!JSON_OUTPUT) {
-      console.log(prefix + connector + name);
-      if (node.children && node.children.length > 0) {
-        printTree(node.children, prefix + (isLast ? "    " : "│   "));
-      }
-    }
+  // directories first, then files, alphabetical
+  items.sort((a, b) => {
+    if (a.isDirectory() && !b.isDirectory()) return -1;
+    if (!a.isDirectory() && b.isDirectory()) return 1;
+    return a.name.localeCompare(b.name);
   });
 
-  return tree;
+  return items.map(item => {
+    const node = { name: item.name };
+
+    if (item.isDirectory() && depth + 1 < MAX_DEPTH) {
+      node.children = generateTree(
+        path.join(dir, item.name),
+        depth + 1
+      );
+    }
+
+    return node;
+  });
 }
 
-// Helper to print JSON-like tree in text mode
+/* ---------------- TREE PRINTING ---------------- */
+
 function printTree(tree, prefix = "") {
   tree.forEach((node, index) => {
     const isLast = index === tree.length - 1;
     const connector = isLast ? "└── " : "├── ";
+
     console.log(prefix + connector + node.name);
-    if (node.children) {
-      printTree(node.children, prefix + (isLast ? "    " : "│   "));
+
+    if (node.children && node.children.length > 0) {
+      printTree(
+        node.children,
+        prefix + (isLast ? "    " : "│   ")
+      );
     }
   });
 }
 
-// --------------------
-// Run CLI
-// --------------------
+/* ---------------- ENTRY POINT ---------------- */
+
 const rootName = path.basename(path.resolve(ROOT_DIR)) || ".";
 
 if (JSON_OUTPUT) {
-  const jsonTree = { name: rootName, children: generateTree(ROOT_DIR) };
-  console.log(JSON.stringify(jsonTree, null, 2));
+  const tree = {
+    name: rootName,
+    children: generateTree(ROOT_DIR)
+  };
+  console.log(JSON.stringify(tree, null, 2));
 } else {
   console.log(rootName);
-  generateTree(ROOT_DIR);
+  const tree = generateTree(ROOT_DIR);
+  printTree(tree);
 }
